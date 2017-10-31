@@ -1,6 +1,7 @@
 import numpy as np
 import requests
 import csv
+from collections import defaultdict
 
 '''
 expr_url = 'https://raw.githubusercontent.com/cs109/2014_data/master/exprs_GSE5859.csv'
@@ -19,21 +20,62 @@ for i, row in enumerate(reader):
         print row
 '''
 
+# Problem 1
+
+# read this into a pandas dataframe, read the column data indexed by header
+# parse this into a dict of arrays first
+
+expr_data = defaultdict(list)
+sample_data = defaultdict(list)
 
 expr_path = 'data/exprs_GSE5859.csv'
 with open(expr_path, 'rb') as csvfile:
-    expr_reader = csv.reader(csvfile, delimiter=',', quotechar='|')
-    for row in expr_reader:
-        print row
+    expr_reader = csv.reader(csvfile, delimiter=',', quotechar='"')
+    for i, row in enumerate(expr_reader):
+        for j in range(len(row)):
+            if i == 0:
+                print row
+                
 
-
-sample_path = 'data/sampleinfo_GSE5859.csv''
+sample_path = 'data/sampleinfo_GSE5859.csv'
 with open(sample_path, 'rb') as csvfile:
-    sample_reader = csv.reader(csvfile, delimiter=',', quotechar='|')
-    for row in sample_path:
+    sample_reader = csv.reader(csvfile, delimiter=',', quotechar='"')
+    for i, row in enumerate(sample_reader):
         print row
 
 
-t
+
+# create a dataframe (matrix) where the columns in the gene expression data frame match the order of the file names sample annotation data frame
+
+
+
+# create a list of year and month as integers from the sample info table, cast into datetime obj?
+
+
+
+
+# create new data frame, where the date columns are now dates since Oct 3rd, 2002
+
+
+
+
+# 1(d) exploratory analysis and SVD, if date of processing has large efffect on variability in the data
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
