@@ -1,34 +1,5 @@
-"""
-Function
---------
-simulate_prizedoor
-
-Generate a random array of 0s, 1s, and 2s, representing
-hiding a prize between door 0, door 1, and door 2
-
-Parameters
-----------
-nsim : int
-    The number of simulations to run
-
-Returns
--------
-sims : array
-    Random array of 0s, 1s, and 2s
-
-Example
--------
-#>>> print simulate_prizedoor(3)
-array([0, 0, 2])
-"""
-def simulate_prizedoor(nsim):
-    #compute here
-    return answer
-
-
-
-
-
+import random
+import np
 
 """
 Function
@@ -54,14 +25,8 @@ Example
 array([0, 0, 2])
 """
 def simulate_prizedoor(nsim):
-    #compute here
+    answer = [random.randint(0, 4) for _ in range(nsim)]
     return answer
-#your code here
-
-
-
-
-
 
 
 """
@@ -90,7 +55,8 @@ Examples
 >>> print goat_door(np.array([0, 1, 2]), np.array([1, 1, 1]))
 >>> array([2, 2, 0])
 """
-#your code here
+def goat_door(prizedoor, guesses):
+    return 
 
 
 
@@ -160,5 +126,9 @@ Examples
 Now, put it together. Simulate 10000 games where contestant keeps his original guess, and 10000 games where the contestant switches his door after a goat door is revealed. Compute the percentage of time the contestant wins under either strategy. Is one strategy better than the other?
 '''
 #your code here
+
+
+
+
 
 
