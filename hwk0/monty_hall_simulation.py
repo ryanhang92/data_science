@@ -1,5 +1,5 @@
 import random
-import np
+import numpy as np
 
 """
 Function
@@ -55,10 +55,27 @@ Examples
 >>> print goat_door(np.array([0, 1, 2]), np.array([1, 1, 1]))
 >>> array([2, 2, 0])
 """
+
+# Given a the true result of the prize door and matching guess, return
+# the door number that is not in that set
+# REturn a list of numbers
 def goat_door(prizedoor, guesses):
-    return 
+    if len(prizedoor) is not len(guesses):
+        raise Exeception('prizedoor and gusses len should be the same')
 
+    goat_doors = []
+    door_set = Set(0, 1, 2)
+    for i, val in enumerate(range(prizedoor)):
+        goat_door =  get_goat_door(door_set, prizedoor, guess)
+        goat_doors.append(goat_door)
+    return goat_doors
 
+# Returns the number from the set that is not in the list
+# It does not matter if prize door == guess door, that
+# means the possible goat door guess is more expansive
+# TODO: complete the implementation
+def get_goat_door(num_set, prize_door, guess_door):
+    return 1
 
 
 
@@ -128,7 +145,8 @@ Now, put it together. Simulate 10000 games where contestant keeps his original g
 #your code here
 
 
+def main():
+    print(simulate_prizedoor(5))
 
-
-
-
+# Execute main method
+main()
