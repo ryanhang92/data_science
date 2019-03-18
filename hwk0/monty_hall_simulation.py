@@ -24,7 +24,7 @@ Example
 >>> print simulate_prizedoor(3)
 array([0, 0, 2])
 """
-# Bug where 3 is not a valid param for the doors
+# Only 0, 1, 2 are valid params
 def simulate_prizedoor(nsim):
     answer = [random.randint(0, 2) for _ in range(nsim)]
     return answer
@@ -61,7 +61,6 @@ Examples
 # the door number that is not in that set
 # REturn a list of numbers
 def goat_door(prize_doors, guesses):
-    print("goar door", len(prize_doors), len(guesses))
     if len(prize_doors) != len(guesses):
         raise Exeception('prize)doors and gusses len should be the same')
 
@@ -191,7 +190,6 @@ def main():
     exper_wr = win_percentage(update_guesses, p_doors)
 
     print("control: {0}, experimental: {1} ".format(control_wr, exper_wr))
-
 
 # Execute main()
 main()
