@@ -24,8 +24,9 @@ Example
 >>> print simulate_prizedoor(3)
 array([0, 0, 2])
 """
+# Bug where 3 is not a valid param for the doors
 def simulate_prizedoor(nsim):
-    answer = [random.randint(0, 4) for _ in range(nsim)]
+    answer = [random.randint(0, 2) for _ in range(nsim)]
     return answer
 
 
@@ -59,26 +60,35 @@ Examples
 # Given a the true result of the prize door and matching guess, return
 # the door number that is not in that set
 # REturn a list of numbers
-def goat_door(prizedoor, guesses):
-    if len(prizedoor) is not len(guesses):
-        raise Exeception('prizedoor and gusses len should be the same')
+def goat_door(prize_doors, guesses):
+    print("goar door", len(prize_doors), len(guesses))
+    if len(prize_doors) != len(guesses):
+        raise Exeception('prize)doors and gusses len should be the same')
 
     goat_doors = []
-    door_set = Set(0, 1, 2)
-    for i, val in enumerate(range(prizedoor)):
-        goat_door =  get_goat_door(door_set, prizedoor, guess)
+    door_set = [0, 1, 2]
+    for i, val in enumerate(prize_doors):
+        goat_door =  get_goat_door(door_set, prize_doors[i], guesses[i])
         goat_doors.append(goat_door)
     return goat_doors
 
-# Returns the number from the set that is not in the list
-# It does not matter if prize door == guess door, that
-# means the possible goat door guess is more expansive
-# TODO: complete the implementation
+# Need to handle edge case where prize and guess door are the same
+# I can just randomize if they are not similar
 def get_goat_door(num_set, prize_door, guess_door):
-    return 1
+    d_set = set(num_set)
+    d_set.remove(prize_door)
 
+    # Random pop, it does not matter
+    if prize_door == guess_door:
+        return d_set.pop()
 
+    # Normal behaviour
+    d_set.remove(guess_door)
 
+    if len(d_set) != 1:
+        raise Exception('There should only be one goat door')
+
+    return d_set.pop()
 
 """
 Function
@@ -103,10 +113,32 @@ Examples
 >>> print switch_guess(np.array([0, 1, 2]), np.array([1, 2, 1]))
 >>> array([2, 0, 0])
 """
-#your code here
+'''Return an array of switches (doors that are not)
+'''
+def switch_guess(guesses, goat_doors):
+    num_set = [0, 1, 2]
+    new_guesses = []
+    for i in range(len(guesses)):
+        new_guess = switcher_helper(num_set, guesses[i], goat_doors[i])
+        new_guesses.append(new_guess)
+    return new_guesses
 
 
+'''Return a switched value for the guess
+'''
+def switcher_helper(door_set, guess, goat_door):
+    d_set = set(door_set)
+    d_set.remove(guess)
 
+    if guess == goat_door:
+        return d_set.pop()
+
+    d_set.remove(goat_door)
+
+    if len(d_set) != 1:
+        raise Exception('There should only be one switched door')
+
+    return d_set.pop()
 
 """
 Function
@@ -132,21 +164,34 @@ Examples
 >>> print win_percentage(np.array([0, 1, 2]), np.array([0, 0, 0]))
 33.333
 """
-#your code here
-
-
-
-
-
+def win_percentage(guesses, prizedoors):
+    total = len(guesses)
+    wins = 0.0
+    for i in range(total):
+        if guesses[i] == prizedoors[i]:
+            wins += 1
+    return wins/total
 
 '''
 Now, put it together. Simulate 10000 games where contestant keeps his original guess, and 10000 games where the contestant switches his door after a goat door is revealed. Compute the percentage of time the contestant wins under either strategy. Is one strategy better than the other?
 '''
-#your code here
-
-
 def main():
-    print(simulate_prizedoor(5))
+    num_sim = 1000
 
-# Execute main method
+    # Control - no goat door
+    p_doors = simulate_prizedoor(num_sim)
+    init_guesses = simulate_prizedoor(num_sim)
+    control_wr = win_percentage(init_guesses, p_doors)
+
+    # View winrate with goat door experiment
+    p_doors = simulate_prizedoor(num_sim)
+    init_guesses = simulate_prizedoor(num_sim)
+    goat_doors = goat_door(p_doors, init_guesses)
+    update_guesses = switch_guess(init_guesses, goat_doors)
+    exper_wr = win_percentage(update_guesses, p_doors)
+
+    print("control: {0}, experimental: {1} ".format(control_wr, exper_wr))
+
+
+# Execute main()
 main()
